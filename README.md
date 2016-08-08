@@ -35,3 +35,5 @@ Curso de Desarrollo de sitios web con PHP y MySQL
 José Mariano González Romano
 -Departamento de Lenguajes y Sistemas Informáticos
 -Universidad de Sevilla
+
+Alumno: Franklin Angulo
