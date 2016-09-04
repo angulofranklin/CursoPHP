@@ -1,0 +1,19 @@
+Base de datos: lindavista
+
+Tablas: noticias, votos, usuarios
+
+Tabla usuarios
+   Usuario:  mariano
+   Clave:    mariano
+
+Permisos MySQL
+   Usuario:  cursophp
+   Clave:    no tiene
+   Permisos: noticias - select
+             usuarios - select
+	     votos    - select, update
+
+   Usuario:  cursophp-ad
+   Clave:    php.hph
+   Permisos: noticias - select, insert, delete
+             usuarios - select, insert

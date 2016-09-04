@@ -9,7 +9,7 @@
    imagefilledrectangle ($imagen, 0, 0, 300, 300, $colorfondo);
 
 // Conectar con el servidor de base de datos
-   $conexion = mysql_connect ("localhost", "Fab10tupapa123456", "")
+   $conexion = mysql_connect ("localhost", "root", "Fab10tupapa123456")
       or die ("No se puede conectar con el servidor");
 
 // Seleccionar base de datos

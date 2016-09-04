@@ -45,7 +45,7 @@
    {
 
    // Conectar con el servidor de base de datos
-      $conexion = mysql_connect ("localhost", "cursophp", "")
+      $conexion = mysql_connect ("localhost", "root", "Fab10tupapa123456")
          or die ("No se puede conectar con el servidor");
 
    // Seleccionar base de datos

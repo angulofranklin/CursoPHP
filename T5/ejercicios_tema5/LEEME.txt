@@ -1,0 +1,7 @@
+NOTA IMPORTANTE
+===============
+
+Para el correcto funcionamiento de la inserción de noticias
+es preciso crear una subcarpeta de nombre 'img' debajo de la carpeta
+donde estén ubicados los ficheros ya que las imágenes de las noticias
+se copian en esta subcarpeta.

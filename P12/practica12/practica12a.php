@@ -19,8 +19,45 @@
       mysql_select_db ("lindavista")
          or die ("No se puede seleccionar la base de datos");
 
+   // Establecer el número de filas por página y la fila inicial
+      $num = 5; // número de filas por página
+      $comienzo = $_REQUEST['comienzo'];
+      if (!isset($comienzo)) $comienzo = 0;
+
+   // Calcular el número total de filas de la tabla
+      $instruccion = "select * from viviendas";
+      $consulta = mysql_query ($instruccion, $conexion)
+         or die ("Fallo en la consulta");
+      $nfilas = mysql_num_rows ($consulta);
+
+      if ($nfilas > 0)
+      {
+      // Mostrar números inicial y final de las filas a mostrar
+         print ("<P>Mostrando viviendas " . ($comienzo + 1) . " a ");
+         if (($comienzo + $num) < $nfilas)
+            print ($comienzo + $num);
+         else
+            print ($nfilas);
+         print (" de un total de $nfilas.\n");
+
+      // Mostrar botones anterior y siguiente
+         $estapagina = $_SERVER['PHP_SELF'];
+         if ($nfilas > $num)
+         {
+            if ($comienzo > 0)
+               print ("[ <A HREF='$estapagina?comienzo=" . ($comienzo - $num) . "'>Anterior</A> | ");
+            else
+               print ("[ Anterior | ");
+            if ($nfilas > ($comienzo + $num))
+               print ("<A HREF='$estapagina?comienzo=" . ($comienzo + $num) . "'>Siguiente</A> ]\n");
+            else
+               print ("Siguiente ]\n");
+         }
+         print ("</P>\n");
+      }
+
    // Enviar consulta
-      $instruccion = "select * from viviendas order by precio asc";
+      $instruccion = "select * from viviendas order by precio asc limit $comienzo, $num";
       $consulta = mysql_query ($instruccion, $conexion)
          or die ("Fallo en la consulta");
 
@@ -60,9 +97,6 @@
          }
 
          print ("</TABLE>\n");
-         
-         print ("<P><A HREF='distribucion_zonas.php'>Distribución de las viviendas por zonas</A></P>\n");
-         
       }
       else
          print ("No hay viviendas disponibles");

@@ -9,6 +9,18 @@
 
 <H1>Consulta de viviendas</H1>
 
+<FORM NAME="selecciona" ACTION="practica12b.php" METHOD="POST">
+<P>Mostrar viviendas de tipo:
+<SELECT NAME="tipo">
+   <OPTION VALUE="Todos" SELECTED>Todos
+   <OPTION VALUE="Piso">Piso
+   <OPTION VALUE="Adosado">Adosado
+   <OPTION VALUE="Chalet">Chalet
+   <OPTION VALUE="Casa">Casa
+</SELECT>
+<INPUT TYPE="submit" NAME="actualizar" VALUE="Actualizar"></P>
+</FORM>
+
 <?PHP
 
    // Conectar con el servidor de base de datos
@@ -20,7 +32,14 @@
          or die ("No se puede seleccionar la base de datos");
 
    // Enviar consulta
-      $instruccion = "select * from viviendas order by precio asc";
+      $instruccion = "select * from viviendas";
+
+      $actualizar = $_REQUEST['actualizar'];
+      $tipo = $_REQUEST['tipo'];
+      if (isset($actualizar) && $tipo != "Todos")
+         $instruccion = $instruccion . " where tipo='$tipo'";
+
+      $instruccion = $instruccion . " order by precio asc";
       $consulta = mysql_query ($instruccion, $conexion)
          or die ("Fallo en la consulta");
 
@@ -60,13 +79,10 @@
          }
 
          print ("</TABLE>\n");
-         
-         print ("<P><A HREF='distribucion_zonas.php'>Distribución de las viviendas por zonas</A></P>\n");
-         
       }
       else
          print ("No hay viviendas disponibles");
-
+         
 // Cerrar conexión
    mysql_close ($conexion);
 

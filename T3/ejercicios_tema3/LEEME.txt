@@ -1,0 +1,7 @@
+NOTA IMPORTANTE
+===============
+
+Para el correcto funcionamiento del ejercicio 4 (subida de ficheros)
+es preciso crear una subcarpeta de nombre 'img' debajo de la carpeta
+donde esté ubicado el fichero ejercicio4.php ya que las imágenes que
+se suben se copian en esta subcarpeta.

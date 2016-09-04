@@ -60,9 +60,6 @@
          }
 
          print ("</TABLE>\n");
-         
-         print ("<P><A HREF='distribucion_zonas.php'>Distribución de las viviendas por zonas</A></P>\n");
-         
       }
       else
          print ("No hay viviendas disponibles");

@@ -3,6 +3,19 @@
 <HEAD>
    <TITLE>Consulta de viviendas</TITLE>
    <LINK REL="stylesheet" TYPE="text/css" HREF="estilo.css">
+
+<SCRIPT LANGUAGE='JavaScript'>
+<!--
+// Función que actualiza la página al cambiar el tipo de vivienda
+   function actualizaPagina ()
+   {
+      i = document.forms.selecciona.tipo.selectedIndex;
+      tipo = document.forms.selecciona.tipo.options[i].value;
+      window.location = 'practica12c.php?tipo=' + tipo;
+   }
+// -->
+</SCRIPT>
+
 </HEAD>
 
 <BODY>
@@ -19,8 +32,48 @@
       mysql_select_db ("lindavista")
          or die ("No se puede seleccionar la base de datos");
 
+   // Mostrar formulario con elemento SELECT para seleccionar tipo de vivienda
+      print ("<FORM NAME='selecciona' ACTION='practica12c.php' METHOD='POST'>\n");
+      print ("<P>Mostrar viviendas de tipo:\n");
+      print ("<SELECT NAME='tipo' ONCHANGE='actualizaPagina()'>\n");
+
+   // Obtener los valores del tipo enumerado
+      $instruccion = "SHOW columns FROM viviendas LIKE 'tipo'";
+      $consulta = mysql_query ($instruccion, $conexion);
+      $row = mysql_fetch_array ($consulta);
+
+   // Pasar los valores a una tabla y añadir el valor "Todos" al principio
+      $lis = strstr ($row[1], "(");
+      $lis = ltrim ($lis, "(");
+      $lis = rtrim ($lis, ")");
+      $lis = "'Todos'," . $lis;
+      $lista = explode (",", $lis);
+
+   // Mostrar cada valor en un elemento OPTION
+      $tipo = $_REQUEST['tipo'];
+      if (isset($tipo))
+         $selected = $tipo;
+      else
+         $selected = "Todos";
+      for ($i=0; $i<count($lista); $i++)
+      {
+         $cad = trim ($lista[$i], "'");
+         if ($cad == $selected)
+            print ("   <OPTION VALUE='$cad' SELECTED>$cad\n");
+         else
+            print ("   <OPTION VALUE='$cad'>$cad\n");
+      }
+
+      print ("</SELECT></P>\n");
+      print ("</FORM>\n");
+
    // Enviar consulta
-      $instruccion = "select * from viviendas order by precio asc";
+      $instruccion = "select * from viviendas";
+
+      if (isset($tipo) && $tipo != "Todos")
+         $instruccion = $instruccion . " where tipo='$tipo'";
+
+      $instruccion = $instruccion . " order by precio asc";
       $consulta = mysql_query ($instruccion, $conexion)
          or die ("Fallo en la consulta");
 
@@ -60,13 +113,10 @@
          }
 
          print ("</TABLE>\n");
-         
-         print ("<P><A HREF='distribucion_zonas.php'>Distribución de las viviendas por zonas</A></P>\n");
-         
       }
       else
          print ("No hay viviendas disponibles");
-
+         
 // Cerrar conexión
    mysql_close ($conexion);
 
